@@ -1,6 +1,6 @@
-crewai==1.14.7
-crewai-tools==1.14.7
-litellm==1.57.4
+crewai>=0.80.0
+crewai-tools>=0.14.0
+litellm>=1.57.4
 duckduckgo-search
 fpdf2
 python-docx
