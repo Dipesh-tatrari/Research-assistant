@@ -313,5 +313,27 @@
       "pdf": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.pdf",
       "docx": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.docx"
     }
+  },
+  {
+    "timestamp": "2026-06-13T13:47:52.759455+00:00",
+    "topic": "umbrella",
+    "output_path": "",
+    "status": "failed",
+    "source": "new",
+    "persona": "general",
+    "error": "Groq rate limit. Wait 60s and retry."
+  },
+  {
+    "timestamp": "2026-06-13T13:50:39.049526+00:00",
+    "topic": "malaria",
+    "output_path": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.md",
+    "status": "success",
+    "source": "cached",
+    "persona": "general",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.md",
+      "pdf": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.pdf",
+      "docx": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.docx"
+    }
   }
 ]
