@@ -13,8 +13,8 @@ import streamlit as st
 st.set_page_config(
     page_title="Research Assistant",
     page_icon="Research",
-    layout="wide",
-    initial_sidebar_state="auto",   # collapsed on mobile, expanded on desktop
+    layout="centered",
+    initial_sidebar_state="collapsed",
 )
 
 # ── Password Gate ─────────────────────────────────────────────────────────────
@@ -228,18 +228,34 @@ section[data-testid="stSidebar"] > div{padding:1rem .75rem!important;}
 }
 
 /* ── Streamlit overrides for mobile ───────────────────────────────────── */
-/* Remove excessive padding on small screens */
 @media (max-width:640px){
     .block-container{padding:1rem .75rem 2rem!important;}
     div[data-testid="stVerticalBlock"]{gap:.5rem!important;}
 }
-/* Full-width columns on mobile */
 @media (max-width:480px){
     div[data-testid="stHorizontalBlock"]{flex-wrap:wrap!important;}
     div[data-testid="stHorizontalBlock"] > div{
         flex:1 1 100%!important;min-width:0!important;
     }
 }
+
+/* ── Persona select buttons — fused to card bottom ──────────────────── */
+div[data-testid="stVerticalBlock"] div[data-testid="stButton"] button{
+    border-radius:0 0 10px 10px!important;
+    margin-top:-2px!important;
+    font-size:0.75rem!important;
+    padding:0.4rem 0.6rem!important;
+    font-family:'IBM Plex Mono',monospace!important;
+    letter-spacing:0.03em!important;
+}
+
+/* ── Fix centered layout max width ───────────────────────────────────── */
+.block-container{max-width:860px!important;padding-left:1.5rem!important;padding-right:1.5rem!important;}
+@media (max-width:640px){
+    .block-container{max-width:100%!important;padding-left:.75rem!important;padding-right:.75rem!important;}
+}
+
+
 
 /* ── Metric cards in sidebar ──────────────────────────────────────────── */
 div[data-testid="stMetric"]{
@@ -379,45 +395,39 @@ if "selected_persona" not in st.session_state:
 # ── Persona grid — pure HTML so all cards are identical size ─────────────────
 selected_now = st.session_state.selected_persona
 
-# Build each card as a plain string — no f-string nesting issues
-def _card(p, is_selected):
-    bc  = p["color"] if is_selected else "#1e2535"
-    bg  = "#1e2840"  if is_selected else "#161b27"
-    shd = ("0 0 0 1.5px " + p["color"]) if is_selected else "none"
-    dsc = p["description"][:52] + ("..." if len(p["description"]) > 52 else "")
-    return (
-        "<div style='background:" + bg + ";border:1.5px solid " + bc + ";"
-        "border-radius:10px;padding:1rem;text-align:center;"
-        "box-shadow:" + shd + ";display:flex;flex-direction:column;"
-        "justify-content:flex-start;height:100%;'>"
-        "<div style='font-size:0.75rem;font-weight:700;color:" + p["color"] + ";"
-        "letter-spacing:0.06em;margin-bottom:0.4rem;text-transform:uppercase;'>"
-        + p["icon"] + "</div>"
-        "<div style='font-size:0.82rem;font-weight:600;color:#e2e8f0;margin-bottom:0.35rem;'>"
-        + p["label"] + "</div>"
-        "<div style='font-size:0.7rem;color:#64748b;line-height:1.45;flex:1;'>"
-        + dsc + "</div>"
-        "</div>"
-    )
+# Persona grid — 3 cards per row, select button INSIDE each card
+rows = [all_personas[i:i+3] for i in range(0, len(all_personas), 3)]
+for row in rows:
+    cols = st.columns(len(row))
+    for col, p in zip(cols, row):
+        is_sel     = selected_now == p["key"]
+        border_col = p["color"] if is_sel else "#1e2535"
+        bg_col     = "#1a2540"  if is_sel else "#161b27"
+        shadow     = ("0 0 0 2px " + p["color"]) if is_sel else "none"
+        dsc        = p["description"][:55] + ("..." if len(p["description"]) > 55 else "")
 
-cards_html = "".join(_card(p, selected_now == p["key"]) for p in all_personas)
-n = len(all_personas)
-grid_html = (
-    "<div style='display:grid;"
-    "grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));"
-    "gap:0.6rem;margin-bottom:0.5rem;align-items:stretch;'>"
-    + cards_html +
-    "</div>"
-)
-st.markdown(grid_html, unsafe_allow_html=True)
-
-# One Select button per persona — rendered below the grid in matching columns
-btn_cols = st.columns(len(all_personas))
-for col, p in zip(btn_cols, all_personas):
-    with col:
-        if st.button("Select", key=f"persona_{p['key']}", use_container_width=True):
-            st.session_state.selected_persona = p["key"]
-            st.rerun()
+        with col:
+            st.markdown(
+                "<div style='background:" + bg_col + ";border:1.5px solid " + border_col + ";"
+                "border-radius:10px 10px 0 0;padding:1rem 0.85rem 0.8rem;"
+                "text-align:center;box-shadow:" + shadow + ";'>"
+                "<div style='font-size:0.72rem;font-weight:700;color:" + p["color"] + ";"
+                "letter-spacing:0.07em;text-transform:uppercase;margin-bottom:0.3rem;'>"
+                + p["icon"] + "</div>"
+                "<div style='font-size:0.82rem;font-weight:600;color:#e2e8f0;margin-bottom:0.3rem;'>"
+                + p["label"] + "</div>"
+                "<div style='font-size:0.68rem;color:#64748b;line-height:1.4;'>"
+                + dsc + "</div>"
+                "</div>",
+                unsafe_allow_html=True
+            )
+            if st.button(
+                ("✓ " + p["label"]) if is_sel else ("Select " + p["label"]),
+                key="persona_" + p["key"],
+                use_container_width=True,
+            ):
+                st.session_state.selected_persona = p["key"]
+                st.rerun()
 
 selected_persona = st.session_state.selected_persona
 persona_info     = next((p for p in all_personas if p["key"] == selected_persona), all_personas[0])
