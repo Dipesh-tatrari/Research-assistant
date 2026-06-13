@@ -27,6 +27,29 @@ from datetime import datetime, timezone
 os.environ["LITELLM_DROP_PARAMS"] = "true"
 os.environ["LITELLM_CACHE"]       = "false"
 
+# ── Permanent cache_breakpoint fix ───────────────────────────────────────────
+# CrewAI 1.14.7 injects cache_breakpoint into messages which Groq rejects.
+# We patch mark_cache_breakpoint to a no-op BEFORE crewai loads any agents.
+def _patch_crewai_cache():
+    try:
+        import crewai.llms.cache as _cache_mod
+        def _noop(message, *args, **kwargs):
+            return message
+        _cache_mod.mark_cache_breakpoint = _noop
+        # Also patch it in all modules that already imported it
+        import crewai.agents.crew_agent_executor as _exec_mod
+        _exec_mod.mark_cache_breakpoint = _noop
+        try:
+            import crewai.experimental.agent_executor as _exp_mod
+            _exp_mod.mark_cache_breakpoint = _noop
+        except Exception:
+            pass
+    except Exception as e:
+        print(f"Cache patch warning: {e}")
+
+_patch_crewai_cache()
+# ── End fix ──────────────────────────────────────────────────────────────────
+
 from crewai import LLM, Agent, Crew, Process, Task
 from crewai.tools import BaseTool
 from duckduckgo_search import DDGS
