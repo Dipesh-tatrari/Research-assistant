@@ -1,0 +1,317 @@
+[
+  {
+    "timestamp": "2026-06-12T04:14:43.865119+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_0944_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "Unexpected error (ClientError): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}"
+  },
+  {
+    "timestamp": "2026-06-12T04:22:43.562519+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_0952_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "Gemini API quota exceeded. Wait a minute and retry, or check your plan at aistudio.google.com/api-keys."
+  },
+  {
+    "timestamp": "2026-06-12T04:31:40.470880+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1001_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "Unexpected error (BadRequestError): litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"'messages.0' : for 'role:system' the following must be satisfied[('messages.0' : property 'cache_breakpoint' is unsupported)]\",\"type\":\"invalid_request_error\"}}\n"
+  },
+  {
+    "timestamp": "2026-06-12T04:34:53.012332+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1004_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "Unexpected error (BadRequestError): litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"'messages.0' : for 'role:system' the following must be satisfied[('messages.0' : property 'cache_breakpoint' is unsupported)]\",\"type\":\"invalid_request_error\"}}\n"
+  },
+  {
+    "timestamp": "2026-06-12T05:07:48.669271+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1037_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "Unexpected error (BadRequestError): litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"'messages.0' : for 'role:system' the following must be satisfied[('messages.0' : property 'cache_breakpoint' is unsupported)]\",\"type\":\"invalid_request_error\"}}\n"
+  },
+  {
+    "timestamp": "2026-06-12T05:19:41.011467+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1049_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "Unexpected error (BadRequestError): litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"'messages.0' : for 'role:system' the following must be satisfied[('messages.0' : property 'cache_breakpoint' is unsupported)]\",\"type\":\"invalid_request_error\"}}\n"
+  },
+  {
+    "timestamp": "2026-06-12T12:50:48.514692+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1820_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "cache_breakpoint error persists. Run:\n  pip install litellm --upgrade\nThen retry."
+  },
+  {
+    "timestamp": "2026-06-12T12:52:54.264717+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1822_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "cache_breakpoint error persists. Run:\n  pip install litellm --upgrade\nThen retry."
+  },
+  {
+    "timestamp": "2026-06-12T12:55:02.050329+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1825_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "cache_breakpoint error persists. Run:\n  pip install litellm --upgrade\nThen retry."
+  },
+  {
+    "timestamp": "2026-06-12T12:57:26.182511+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1827_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "cache_breakpoint error persists. Run:\n  pip install litellm --upgrade\nThen retry."
+  },
+  {
+    "timestamp": "2026-06-12T13:04:22.553124+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1834_ai_agents_in_healthcare_2025.md",
+    "status": "failed",
+    "error": "cache_breakpoint error persists. Run:\n  pip install litellm --upgrade\nThen retry."
+  },
+  {
+    "timestamp": "2026-06-12T13:18:40.228735+00:00",
+    "topic": "AI agents in healthcare 2025",
+    "output_path": "D:\\research\\outputs\\report_20260612_1848_ai_agents_in_healthcare_2025.md",
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-06-12T13:27:07.517762+00:00",
+    "topic": "overall development of AI",
+    "output_path": "D:\\research\\outputs\\report_20260612_1856_overall_development_of_ai.md",
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-06-12T18:23:08.252739+00:00",
+    "topic": "atom",
+    "output_path": "D:\\research\\outputs\\report_20260612_2352_atom.md",
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-06-12T18:41:32.757969+00:00",
+    "topic": "india",
+    "output_path": "D:\\research\\outputs\\report_20260613_0011_india.md",
+    "status": "success",
+    "source": "new"
+  },
+  {
+    "timestamp": "2026-06-12T18:45:21.493970+00:00",
+    "topic": "india",
+    "output_path": "D:\\research\\outputs\\report_20260613_0011_india.md",
+    "status": "success",
+    "source": "cached"
+  },
+  {
+    "timestamp": "2026-06-12T18:45:35.004653+00:00",
+    "topic": "india",
+    "output_path": "D:\\research\\outputs\\report_20260613_0015_india.md",
+    "status": "success",
+    "source": "new"
+  },
+  {
+    "timestamp": "2026-06-13T03:52:00.771944+00:00",
+    "topic": "america",
+    "output_path": "",
+    "status": "failed",
+    "source": "new",
+    "error": "Error (BadRequestError): litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n"
+  },
+  {
+    "timestamp": "2026-06-13T03:56:53.611687+00:00",
+    "topic": "america",
+    "output_path": "",
+    "status": "failed",
+    "source": "new",
+    "error": "Groq rate limit hit. Wait 60 seconds and retry."
+  },
+  {
+    "timestamp": "2026-06-13T04:01:11.264852+00:00",
+    "topic": "Dehradun",
+    "output_path": "D:\\research\\outputs\\report_20260613_0930_dehradun.md",
+    "status": "success",
+    "source": "new",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_0930_dehradun.md",
+      "pdf_error": "Character \"🔬\" at index 0 in text is outside the range of characters supported by the font used: \"helveticaB\". Please consider using a Unicode font.",
+      "docx_error": "'https://www.indiatimes.com/city/dehradun/dehradun-economy-517131.html'"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T04:03:15.535798+00:00",
+    "topic": "Dehradun",
+    "output_path": "D:\\research\\outputs\\report_20260613_0930_dehradun.md",
+    "status": "success",
+    "source": "cached",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_0930_dehradun.md",
+      "pdf_error": "Character \"🔬\" at index 0 in text is outside the range of characters supported by the font used: \"helveticaB\". Please consider using a Unicode font.",
+      "docx_error": "'https://www.indiatimes.com/city/dehradun/dehradun-economy-517131.html'"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T04:14:35.230771+00:00",
+    "topic": "babool",
+    "output_path": "D:\\research\\outputs\\report_20260613_0944_babool.md",
+    "status": "success",
+    "source": "new",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_0944_babool.md",
+      "pdf_error": "Character \"🔬\" at index 0 in text is outside the range of characters supported by the font used: \"helveticaB\". Please consider using a Unicode font.",
+      "docx": "D:\\research\\outputs\\report_20260613_0944_babool.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T04:15:28.221411+00:00",
+    "topic": "babool",
+    "output_path": "D:\\research\\outputs\\report_20260613_0944_babool.md",
+    "status": "success",
+    "source": "cached",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_0944_babool.md",
+      "pdf_error": "Character \"🔬\" at index 0 in text is outside the range of characters supported by the font used: \"helveticaB\". Please consider using a Unicode font.",
+      "docx": "D:\\research\\outputs\\report_20260613_0944_babool.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T04:23:03.113381+00:00",
+    "topic": "neem",
+    "output_path": "D:\\research\\outputs\\report_20260613_0952_neem.md",
+    "status": "success",
+    "source": "new",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_0952_neem.md",
+      "pdf_error": "Character \"🔬\" at index 0 in text is outside the range of characters supported by the font used: \"helveticaB\". Please consider using a Unicode font.",
+      "docx": "D:\\research\\outputs\\report_20260613_0952_neem.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T04:25:42.770421+00:00",
+    "topic": "tense",
+    "output_path": "D:\\research\\outputs\\report_20260613_0955_tense.md",
+    "status": "success",
+    "source": "new",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_0955_tense.md",
+      "pdf_error": "Character \"🔬\" at index 0 in text is outside the range of characters supported by the font used: \"helveticaB\". Please consider using a Unicode font.",
+      "docx": "D:\\research\\outputs\\report_20260613_0955_tense.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T04:29:11.070430+00:00",
+    "topic": "amla",
+    "output_path": "D:\\research\\outputs\\report_20260613_0958_amla.md",
+    "status": "success",
+    "source": "new",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_0958_amla.md",
+      "pdf_error": "Character \"🔬\" at index 0 in text is outside the range of characters supported by the font used: \"helveticaB\". Please consider using a Unicode font.",
+      "docx": "D:\\research\\outputs\\report_20260613_0958_amla.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T04:34:39.866222+00:00",
+    "topic": "minerals",
+    "output_path": "D:\\research\\outputs\\report_20260613_1004_minerals.md",
+    "status": "success",
+    "source": "new",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_1004_minerals.md",
+      "pdf": "D:\\research\\outputs\\report_20260613_1004_minerals.pdf",
+      "docx": "D:\\research\\outputs\\report_20260613_1004_minerals.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T11:34:00.372722+00:00",
+    "topic": "Cnacer",
+    "output_path": "D:\\research\\outputs\\report_20260613_1703_medical_cnacer.md",
+    "status": "success",
+    "source": "new",
+    "persona": "medical",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_1703_medical_cnacer.md",
+      "pdf": "D:\\research\\outputs\\report_20260613_1703_medical_cnacer.pdf",
+      "docx": "D:\\research\\outputs\\report_20260613_1703_medical_cnacer.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T11:35:59.661813+00:00",
+    "topic": "current bitcoin trend",
+    "output_path": "D:\\research\\outputs\\report_20260613_1705_financial_current_bitcoin_trend.md",
+    "status": "success",
+    "source": "new",
+    "persona": "financial",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_1705_financial_current_bitcoin_trend.md",
+      "pdf": "D:\\research\\outputs\\report_20260613_1705_financial_current_bitcoin_trend.pdf",
+      "docx": "D:\\research\\outputs\\report_20260613_1705_financial_current_bitcoin_trend.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T11:36:41.191486+00:00",
+    "topic": "current bitcoin trend",
+    "output_path": "D:\\research\\outputs\\report_20260613_1705_financial_current_bitcoin_trend.md",
+    "status": "success",
+    "source": "cached",
+    "persona": "financial",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_1705_financial_current_bitcoin_trend.md",
+      "pdf": "D:\\research\\outputs\\report_20260613_1705_financial_current_bitcoin_trend.pdf",
+      "docx": "D:\\research\\outputs\\report_20260613_1705_financial_current_bitcoin_trend.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T12:03:24.001020+00:00",
+    "topic": "Cryptography",
+    "output_path": "D:\\research\\outputs\\report_20260613_1732_technical_cryptography.md",
+    "status": "success",
+    "source": "new",
+    "persona": "technical",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_1732_technical_cryptography.md",
+      "pdf": "D:\\research\\outputs\\report_20260613_1732_technical_cryptography.pdf",
+      "docx": "D:\\research\\outputs\\report_20260613_1732_technical_cryptography.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T12:04:35.237118+00:00",
+    "topic": "Cryptography",
+    "output_path": "D:\\research\\outputs\\report_20260613_1732_technical_cryptography.md",
+    "status": "success",
+    "source": "cached",
+    "persona": "technical",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_1732_technical_cryptography.md",
+      "pdf": "D:\\research\\outputs\\report_20260613_1732_technical_cryptography.pdf",
+      "docx": "D:\\research\\outputs\\report_20260613_1732_technical_cryptography.docx"
+    }
+  },
+  {
+    "timestamp": "2026-06-13T12:09:21.304875+00:00",
+    "topic": "Article 14 of indian constitution",
+    "output_path": "",
+    "status": "failed",
+    "source": "new",
+    "persona": "legal",
+    "error": "Groq rate limit. Wait 60s and retry."
+  },
+  {
+    "timestamp": "2026-06-13T12:11:35.215910+00:00",
+    "topic": "malaria",
+    "output_path": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.md",
+    "status": "success",
+    "source": "new",
+    "persona": "medical",
+    "exports": {
+      "md": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.md",
+      "pdf": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.pdf",
+      "docx": "D:\\research\\outputs\\report_20260613_1741_medical_malaria.docx"
+    }
+  }
+]

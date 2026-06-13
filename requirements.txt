@@ -1,0 +1,9 @@
+# Core agent framework
+crewai>=0.80.0
+crewai-tools>=0.17.0
+
+# Gemini LLM backend
+langchain-google-genai>=2.0.0
+
+# (Optional) Streamlit front-end — Phase 2
+# streamlit>=1.35.0
