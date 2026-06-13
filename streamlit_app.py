@@ -14,7 +14,7 @@ st.set_page_config(
     page_title="Research Assistant",
     page_icon="Research",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",   # collapsed on mobile, expanded on desktop
 )
 
 # ── Password Gate ─────────────────────────────────────────────────────────────
@@ -81,70 +81,178 @@ if not _check_password():
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+/* ── Reset & Base ─────────────────────────────────────────────────────── */
+*{box-sizing:border-box;}
 html,body,[class*="css"]{font-family:'IBM Plex Sans',sans-serif;}
 .stApp{background-color:#0f1117;}
-section[data-testid="stSidebar"]{background-color:#161b27;border-right:1px solid #1e2535;}
-.ra-header{padding:1.5rem 0 1.2rem;border-bottom:1px solid #1e2535;margin-bottom:1.5rem;}
-.ra-title{font-family:'IBM Plex Mono',monospace;font-size:1.5rem;font-weight:600;color:#e2e8f0;}
-.ra-subtitle{font-size:0.82rem;color:#64748b;font-family:'IBM Plex Mono',monospace;margin-top:0.2rem;}
-.stTextInput input{background-color:#161b27!important;border:1px solid #1e2535!important;color:#e2e8f0!important;border-radius:6px!important;font-size:0.95rem!important;padding:0.75rem 1rem!important;}
+
+/* ── Sidebar ──────────────────────────────────────────────────────────── */
+section[data-testid="stSidebar"]{
+    background-color:#161b27;
+    border-right:1px solid #1e2535;
+    min-width:240px!important;
+}
+section[data-testid="stSidebar"] > div{padding:1rem .75rem!important;}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+.ra-header{padding:1.2rem 0 1rem;border-bottom:1px solid #1e2535;margin-bottom:1.2rem;}
+.ra-title{font-family:'IBM Plex Mono',monospace;font-size:clamp(1.1rem,3vw,1.5rem);
+          font-weight:600;color:#e2e8f0;line-height:1.2;}
+.ra-subtitle{font-size:clamp(0.7rem,1.5vw,0.82rem);color:#64748b;
+             font-family:'IBM Plex Mono',monospace;margin-top:0.2rem;}
+
+/* ── Inputs ───────────────────────────────────────────────────────────── */
+.stTextInput input{
+    background-color:#161b27!important;border:1px solid #1e2535!important;
+    color:#e2e8f0!important;border-radius:6px!important;
+    font-size:clamp(0.85rem,2vw,0.95rem)!important;
+    padding:0.65rem 0.9rem!important;width:100%!important;
+}
 .stTextInput input:focus{border-color:#3b82f6!important;box-shadow:0 0 0 2px rgba(59,130,246,0.15)!important;}
-.stButton>button{background:linear-gradient(135deg,#3b82f6,#2563eb)!important;color:white!important;border:none!important;border-radius:6px!important;font-weight:500!important;padding:0.6rem 1.2rem!important;width:100%!important;}
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+.stButton>button{
+    background:linear-gradient(135deg,#3b82f6,#2563eb)!important;
+    color:white!important;border:none!important;border-radius:6px!important;
+    font-weight:500!important;padding:0.55rem 0.8rem!important;
+    width:100%!important;font-size:clamp(0.78rem,1.8vw,0.9rem)!important;
+    white-space:nowrap!important;transition:opacity .2s!important;
+}
 .stButton>button:hover{opacity:.88!important;}
-.stDownloadButton>button{background:#1e2535!important;color:#e2e8f0!important;border:1px solid #334155!important;border-radius:6px!important;font-size:0.85rem!important;width:100%!important;}
-.card{background:#161b27;border:1px solid #1e2535;border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1rem;}
+.stDownloadButton>button{
+    background:#1e2535!important;color:#e2e8f0!important;
+    border:1px solid #334155!important;border-radius:6px!important;
+    font-size:clamp(0.72rem,1.5vw,0.85rem)!important;width:100%!important;
+    padding:.45rem .6rem!important;
+}
+
+/* ── Cards ────────────────────────────────────────────────────────────── */
+.card{background:#161b27;border:1px solid #1e2535;border-radius:8px;
+      padding:1rem 1.2rem;margin-bottom:.85rem;}
 .card-success{border-left:3px solid #22c55e;}
-.card-error{border-left:3px solid #ef4444;}
-.card-info{border-left:3px solid #3b82f6;}
-.card-cache{border-left:3px solid #a855f7;}
+.card-error  {border-left:3px solid #ef4444;}
+.card-info   {border-left:3px solid #3b82f6;}
+.card-cache  {border-left:3px solid #a855f7;}
 .card-warning{border-left:3px solid #f59e0b;}
 
-/* Persona cards */
-.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;margin-bottom:1.2rem;}
-.persona-card{background:#161b27;border:1px solid #1e2535;border-radius:8px;padding:0.9rem 1rem;cursor:pointer;transition:all 0.15s;position:relative;}
-.persona-card:hover{border-color:#334155;background:#1a2032;}
-.persona-card.selected{border-color:var(--pc);background:#1a2032;box-shadow:0 0 0 1px var(--pc);}
-.persona-icon{font-size:1.4rem;margin-bottom:0.4rem;}
-.persona-name{font-size:0.82rem;font-weight:600;color:#e2e8f0;margin-bottom:0.2rem;}
-.persona-desc{font-size:0.72rem;color:#64748b;line-height:1.4;}
-.persona-badge{display:inline-block;padding:0.15rem 0.5rem;border-radius:3px;font-size:0.7rem;font-family:'IBM Plex Mono',monospace;font-weight:600;margin-right:0.3rem;}
-
-.mem-badge{display:inline-block;padding:.2rem .6rem;border-radius:4px;font-size:.75rem;font-family:'IBM Plex Mono',monospace;font-weight:600;margin-right:.4rem;}
-.badge-new{background:#1e3a5f;color:#60a5fa;}
-.badge-cached{background:#2d1b69;color:#a78bfa;}
-.badge-stale{background:#3d2100;color:#fbbf24;}
+/* ── Badges & Chips ───────────────────────────────────────────────────── */
+.mem-badge{display:inline-block;padding:.18rem .5rem;border-radius:4px;
+           font-size:clamp(.65rem,1.4vw,.75rem);font-family:'IBM Plex Mono',monospace;
+           font-weight:600;margin-right:.35rem;}
+.badge-new    {background:#1e3a5f;color:#60a5fa;}
+.badge-cached {background:#2d1b69;color:#a78bfa;}
+.badge-stale  {background:#3d2100;color:#fbbf24;}
 .badge-related{background:#1a3320;color:#4ade80;}
-.chip{display:inline-block;background:#1e2535;color:#94a3b8;border-radius:4px;padding:.2rem .6rem;font-size:.75rem;font-family:'IBM Plex Mono',monospace;margin-right:.4rem;}
-.export-box{background:#0f1117;border:1px solid #1e2535;border-radius:8px;padding:1rem 1.25rem;margin-top:.75rem;}
-.export-title{color:#94a3b8;font-size:.75rem;font-family:'IBM Plex Mono',monospace;font-weight:600;margin-bottom:.75rem;letter-spacing:.05em;}
-.hist-item{background:#161b27;border:1px solid #1e2535;border-radius:6px;padding:.75rem 1rem;margin-bottom:.5rem;font-size:.82rem;}
+.chip{display:inline-block;background:#1e2535;color:#94a3b8;border-radius:4px;
+      padding:.18rem .5rem;font-size:clamp(.65rem,1.4vw,.75rem);
+      font-family:'IBM Plex Mono',monospace;margin-right:.35rem;}
+
+/* ── Export box ───────────────────────────────────────────────────────── */
+.export-box{background:#0f1117;border:1px solid #1e2535;border-radius:8px;
+            padding:.85rem 1rem;margin-top:.65rem;}
+.export-title{color:#94a3b8;font-size:.72rem;font-family:'IBM Plex Mono',monospace;
+              font-weight:600;margin-bottom:.65rem;letter-spacing:.05em;}
+
+/* ── History items ────────────────────────────────────────────────────── */
+.hist-item{background:#161b27;border:1px solid #1e2535;border-radius:6px;
+           padding:.65rem .85rem;margin-bottom:.4rem;font-size:.8rem;}
 .hist-success{border-left:2px solid #22c55e;}
-.hist-failed{border-left:2px solid #ef4444;}
-.hist-topic{color:#e2e8f0;font-weight:500;margin-bottom:.2rem;}
-.hist-meta{color:#64748b;font-family:'IBM Plex Mono',monospace;font-size:.72rem;}
-.report-container{background:#161b27;border:1px solid #1e2535;border-radius:8px;padding:2.5rem;margin-top:1rem;line-height:1.8;}
-.report-container h1{color:#e2e8f0;font-size:1.6rem;border-bottom:2px solid #2563eb;padding-bottom:.5rem;margin-bottom:1.2rem;}
-.report-container h2{color:#93c5fd;font-size:1.2rem;margin-top:2rem;margin-bottom:.6rem;}
-.report-container h3{color:#cbd5e1;font-size:1rem;margin-top:1.2rem;}
-.report-container p{color:#94a3b8;line-height:1.8;margin-bottom:.8rem;}
-.report-container li{color:#94a3b8;line-height:1.9;}
-.report-container a{color:#3b82f6;}
+.hist-failed {border-left:2px solid #ef4444;}
+.hist-topic  {color:#e2e8f0;font-weight:500;margin-bottom:.15rem;
+              white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hist-meta   {color:#64748b;font-family:'IBM Plex Mono',monospace;font-size:.68rem;}
+
+/* ── Report container ─────────────────────────────────────────────────── */
+.report-container{
+    background:#161b27;border:1px solid #1e2535;border-radius:8px;
+    padding:clamp(1.2rem,4vw,2.5rem);margin-top:1rem;line-height:1.8;
+    overflow-x:auto;word-break:break-word;
+}
+.report-container h1{color:#e2e8f0;font-size:clamp(1.2rem,3vw,1.6rem);
+    border-bottom:2px solid #2563eb;padding-bottom:.5rem;margin-bottom:1.2rem;}
+.report-container h2{color:#93c5fd;font-size:clamp(1rem,2.5vw,1.2rem);
+    margin-top:1.8rem;margin-bottom:.6rem;}
+.report-container h3{color:#cbd5e1;font-size:clamp(.9rem,2vw,1rem);margin-top:1.2rem;}
+.report-container p {color:#94a3b8;line-height:1.8;margin-bottom:.8rem;
+    font-size:clamp(.85rem,1.8vw,.95rem);}
+.report-container li{color:#94a3b8;line-height:1.9;font-size:clamp(.85rem,1.8vw,.95rem);}
+.report-container a {color:#3b82f6;word-break:break-all;}
 .report-container hr{border-color:#1e2535;margin:1.5rem 0;}
 .report-container strong{color:#cbd5e1;}
-.report-container code{background:#1e2535;color:#7dd3fc;padding:.1rem .3rem;border-radius:3px;font-size:.85em;}
-/* Chat section */
-.chat-header{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:600;
-             color:#94a3b8;letter-spacing:.06em;margin:2rem 0 1rem;}
-.chat-msg-user{background:#1e3a5f;border:1px solid #2563eb33;border-radius:8px 8px 2px 8px;
-               padding:.75rem 1rem;margin-bottom:.6rem;color:#e2e8f0;font-size:.9rem;
-               max-width:80%;margin-left:auto;}
-.chat-msg-ai{background:#161b27;border:1px solid #1e2535;border-radius:8px 8px 8px 2px;
-             padding:.75rem 1rem;margin-bottom:.6rem;color:#94a3b8;font-size:.9rem;
-             max-width:88%;}
+.report-container code{background:#1e2535;color:#7dd3fc;padding:.1rem .3rem;
+    border-radius:3px;font-size:.85em;word-break:break-all;}
+
+/* ── Chat ─────────────────────────────────────────────────────────────── */
+.chat-msg-user{background:#1e3a5f;border:1px solid #2563eb33;
+    border-radius:8px 8px 2px 8px;padding:.7rem .9rem;margin-bottom:.55rem;
+    color:#e2e8f0;font-size:clamp(.82rem,1.8vw,.9rem);
+    max-width:85%;margin-left:auto;}
+.chat-msg-ai{background:#161b27;border:1px solid #1e2535;
+    border-radius:8px 8px 8px 2px;padding:.7rem .9rem;margin-bottom:.55rem;
+    color:#94a3b8;font-size:clamp(.82rem,1.8vw,.9rem);max-width:92%;}
 .chat-msg-ai strong{color:#cbd5e1;}
 .chat-msg-ai a{color:#3b82f6;}
-.chat-wrap{max-height:420px;overflow-y:auto;padding:.5rem 0;margin-bottom:.75rem;}
-.chat-input-area{background:#161b27;border:1px solid #1e2535;border-radius:8px;padding:.75rem;}
+
+/* ── Responsive breakpoints ───────────────────────────────────────────── */
+
+/* Tablet (≤900px) */
+@media (max-width:900px){
+    .ra-title{font-size:1.2rem;}
+    .report-container{padding:1.2rem;}
+    section[data-testid="stSidebar"]{min-width:200px!important;}
+}
+
+/* Mobile (≤640px) */
+@media (max-width:640px){
+    .stApp > div{padding:0 .5rem!important;}
+    .ra-header{padding:.8rem 0 .7rem;}
+    .ra-title{font-size:1.05rem;}
+    .ra-subtitle{font-size:.7rem;}
+    .card{padding:.75rem .9rem;}
+    .report-container{padding:1rem .8rem;border-radius:6px;}
+    .report-container h1{font-size:1.1rem;}
+    .report-container h2{font-size:.95rem;}
+    .export-box{padding:.7rem .8rem;}
+    .chat-msg-user{max-width:95%;}
+    .chat-msg-ai  {max-width:98%;}
+    /* Stack download buttons vertically on mobile */
+    div[data-testid="stHorizontalBlock"] > div{min-width:100%!important;}
+}
+
+/* Very small screens (≤400px) */
+@media (max-width:400px){
+    .ra-title{font-size:.95rem;}
+    .mem-badge,.chip{font-size:.62rem;padding:.12rem .35rem;}
+    .stButton>button{font-size:.75rem!important;padding:.45rem .5rem!important;}
+}
+
+/* ── Streamlit overrides for mobile ───────────────────────────────────── */
+/* Remove excessive padding on small screens */
+@media (max-width:640px){
+    .block-container{padding:1rem .75rem 2rem!important;}
+    div[data-testid="stVerticalBlock"]{gap:.5rem!important;}
+}
+/* Full-width columns on mobile */
+@media (max-width:480px){
+    div[data-testid="stHorizontalBlock"]{flex-wrap:wrap!important;}
+    div[data-testid="stHorizontalBlock"] > div{
+        flex:1 1 100%!important;min-width:0!important;
+    }
+}
+
+/* ── Metric cards in sidebar ──────────────────────────────────────────── */
+div[data-testid="stMetric"]{
+    background:#1e2535;border-radius:6px;padding:.5rem .75rem;
+}
+div[data-testid="stMetricValue"]{font-size:1.3rem!important;color:#e2e8f0!important;}
+div[data-testid="stMetricLabel"]{font-size:.7rem!important;color:#64748b!important;}
+
+/* ── Scrollbar styling ────────────────────────────────────────────────── */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:#0f1117;}
+::-webkit-scrollbar-thumb{background:#1e2535;border-radius:2px;}
+::-webkit-scrollbar-thumb:hover{background:#334155;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -295,8 +403,9 @@ def _card(p, is_selected):
 cards_html = "".join(_card(p, selected_now == p["key"]) for p in all_personas)
 n = len(all_personas)
 grid_html = (
-    "<div style='display:grid;grid-template-columns:repeat(" + str(n) + ",1fr);"
-    "gap:0.65rem;margin-bottom:0.5rem;align-items:stretch;'>"
+    "<div style='display:grid;"
+    "grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));"
+    "gap:0.6rem;margin-bottom:0.5rem;align-items:stretch;'>"
     + cards_html +
     "</div>"
 )
@@ -327,15 +436,19 @@ st.markdown(f"""
 </div>""", unsafe_allow_html=True)
 
 # ── Topic input + buttons ─────────────────────────────────────────────────────
-col1, col2, col3 = st.columns([3, 0.8, 0.8])
-with col1:
-    topic = st.text_input("topic", placeholder="e.g. CRISPR gene therapy clinical trials 2025",
-                          label_visibility="collapsed")
-with col2:
-    run_btn   = st.button("Run",   disabled=not validate_api_key())
-with col3:
-    force_btn = st.button("Force", disabled=not validate_api_key(),
-                          help="Bypass cache — run fresh research")
+# Responsive input layout
+topic = st.text_input(
+    "topic",
+    placeholder="e.g. CRISPR gene therapy 2025, Bitcoin market analysis...",
+    label_visibility="collapsed",
+)
+btn_col1, btn_col2 = st.columns([1, 1])
+with btn_col1:
+    run_btn   = st.button("Run Research", disabled=not validate_api_key(), use_container_width=True)
+with btn_col2:
+    force_btn = st.button("Force Refresh", disabled=not validate_api_key(),
+                          help="Bypass cache — always run fresh",
+                          use_container_width=True)
 
 # Memory preview
 if topic.strip():
@@ -395,30 +508,42 @@ if (run_btn or force_btn) and topic.strip():
         # Downloads
         exports = result.get("exports",{})
         st.markdown("<div class='export-box'><div class='export-title'>DOWNLOAD REPORT</div>", unsafe_allow_html=True)
-        dl1, dl2, dl3 = st.columns(3)
-        with dl1:
-            md_path = result.get("path")
-            if md_path and os.path.exists(md_path):
+        md_path   = result.get("path")
+        pdf_path  = exports.get("pdf")
+        docx_path = exports.get("docx")
+        # Count available downloads to set columns
+        avail = sum([
+            bool(md_path and os.path.exists(md_path)),
+            bool(pdf_path and os.path.exists(pdf_path)),
+            bool(docx_path and os.path.exists(docx_path)),
+        ])
+        dl_cols = st.columns(max(avail, 1))
+        col_idx = 0
+        if md_path and os.path.exists(md_path):
+            with dl_cols[col_idx]:
                 with open(md_path,"rb") as f:
-                    st.download_button("Markdown", f,
-                        file_name=os.path.basename(md_path), mime="text/markdown")
-        with dl2:
-            pdf_path = exports.get("pdf")
-            if pdf_path and os.path.exists(pdf_path):
+                    st.download_button("Markdown (.md)", f,
+                        file_name=os.path.basename(md_path),
+                        mime="text/markdown", use_container_width=True)
+            col_idx += 1
+        if pdf_path and os.path.exists(pdf_path):
+            with dl_cols[col_idx]:
                 with open(pdf_path,"rb") as f:
-                    st.download_button("PDF", f,
-                        file_name=os.path.basename(pdf_path), mime="application/pdf")
-            elif "pdf_error" in exports:
-                st.caption(f"PDF error: {exports['pdf_error'][:50]}")
-        with dl3:
-            docx_path = exports.get("docx")
-            if docx_path and os.path.exists(docx_path):
+                    st.download_button("PDF Report", f,
+                        file_name=os.path.basename(pdf_path),
+                        mime="application/pdf", use_container_width=True)
+            col_idx += 1
+        elif "pdf_error" in exports:
+            st.caption(f"PDF: {exports['pdf_error'][:60]}")
+        if docx_path and os.path.exists(docx_path):
+            with dl_cols[col_idx]:
                 with open(docx_path,"rb") as f:
-                    st.download_button("Word", f,
+                    st.download_button("Word (.docx)", f,
                         file_name=os.path.basename(docx_path),
-                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-            elif "docx_error" in exports:
-                st.caption(f"DOCX error: {exports['docx_error'][:50]}")
+                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        use_container_width=True)
+        elif "docx_error" in exports:
+            st.caption(f"DOCX: {exports['docx_error'][:60]}")
         st.markdown("</div>", unsafe_allow_html=True)
 
         # Related context expander
@@ -501,8 +626,11 @@ if st.session_state.get("last_result") and st.session_state.last_result.get("sta
         "Explain this to a beginner",
     ]
     _clicked_sug = None
-    _sug_cols = st.columns(len(_suggestions))
-    for _sc, _sug in zip(_sug_cols, _suggestions):
+    # Suggestion chips: 2 per row on mobile, 4 on desktop
+    _sug_row1 = st.columns(2)
+    _sug_row2 = st.columns(2)
+    _sug_grid = [_sug_row1[0], _sug_row1[1], _sug_row2[0], _sug_row2[1]]
+    for _sc, _sug in zip(_sug_grid, _suggestions):
         with _sc:
             if st.button(_sug, key="sug_" + _sug[:20] + _chat_key, use_container_width=True):
                 _clicked_sug = _sug
