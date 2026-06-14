@@ -111,6 +111,7 @@ def _ensure_dirs():
     os.makedirs(LOGS_DIR, exist_ok=True)
 
 def _load_history() -> list:
+    """Local fallback only — primary storage is cloud_storage (Supabase)."""
     if not os.path.exists(HISTORY_FILE):
         return []
     try:
@@ -121,7 +122,11 @@ def _load_history() -> list:
         return []
 
 def record_run(topic, output_path, status="success", error_message=None,
-               source="new", exports=None, persona="general"):
+               source="new", exports=None, persona="general", output_text=""):
+    """
+    Persist a run record. Writes to Supabase via cloud_storage if configured,
+    AND to local history.json as a backup (useful for local dev / memory.py).
+    """
     entry = {
         "timestamp":   datetime.now(timezone.utc).isoformat(),
         "topic":       topic,
@@ -132,11 +137,30 @@ def record_run(topic, output_path, status="success", error_message=None,
     }
     if error_message: entry["error"]   = error_message
     if exports:       entry["exports"] = exports
+
+    # Always write locally too (memory.py reads this for cache/related checks)
     _ensure_dirs()
     records = _load_history()
     records.append(entry)
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(records, f, indent=2, ensure_ascii=False)
+
+    # Also write to Supabase if configured (survives restarts on Streamlit Cloud)
+    try:
+        from cloud_storage import record_run as cloud_record_run
+        cloud_record_run(
+            topic=topic,
+            output_path=output_path,
+            output_text=output_text,
+            status=status,
+            error_message=error_message,
+            source=source,
+            exports=exports,
+            persona=persona,
+        )
+    except Exception as e:
+        log.warning(f"Cloud history write skipped: {e}")
+
     return entry
 
 def print_history():
@@ -353,7 +377,7 @@ class ResearchCrew:
             exports = self._do_exports(output_text, output_path)
             record_run(self.topic, output_path, "success",
                        source=source, exports=exports,
-                       persona=self.persona_key)
+                       persona=self.persona_key, output_text=output_text)
             return {
                 "status":        "success",
                 "topic":         self.topic,

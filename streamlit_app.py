@@ -13,7 +13,7 @@ import streamlit as st
 st.set_page_config(
     page_title="Research Assistant",
     page_icon="Research",
-    layout="centered",
+    layout="wide",
     initial_sidebar_state="collapsed",
 )
 
@@ -96,11 +96,14 @@ section[data-testid="stSidebar"]{
 section[data-testid="stSidebar"] > div{padding:1rem .75rem!important;}
 
 /* ── Header ───────────────────────────────────────────────────────────── */
-.ra-header{padding:1.2rem 0 1rem;border-bottom:1px solid #1e2535;margin-bottom:1.2rem;}
-.ra-title{font-family:'IBM Plex Mono',monospace;font-size:clamp(1.1rem,3vw,1.5rem);
+.ra-header{padding:2rem 0 1.5rem;border-bottom:1px solid #1e2535;margin-bottom:2rem;}
+.ra-title{font-family:'IBM Plex Mono',monospace;font-size:clamp(1.2rem,2.5vw,2rem);
           font-weight:600;color:#e2e8f0;line-height:1.2;}
-.ra-subtitle{font-size:clamp(0.7rem,1.5vw,0.82rem);color:#64748b;
-             font-family:'IBM Plex Mono',monospace;margin-top:0.2rem;}
+.ra-subtitle{font-size:clamp(0.72rem,1.2vw,0.9rem);color:#64748b;
+             font-family:'IBM Plex Mono',monospace;margin-top:0.35rem;}
+@media (max-width:640px){
+    .ra-header{padding:1rem 0 .8rem;margin-bottom:1rem;}
+}
 
 /* ── Inputs ───────────────────────────────────────────────────────────── */
 .stTextInput input{
@@ -128,8 +131,9 @@ section[data-testid="stSidebar"] > div{padding:1rem .75rem!important;}
 }
 
 /* ── Cards ────────────────────────────────────────────────────────────── */
-.card{background:#161b27;border:1px solid #1e2535;border-radius:8px;
-      padding:1rem 1.2rem;margin-bottom:.85rem;}
+.card{background:#161b27;border:1px solid #1e2535;border-radius:10px;
+      padding:1.2rem 1.5rem;margin-bottom:1rem;}
+@media (max-width:640px){.card{padding:.85rem 1rem;margin-bottom:.75rem;}}
 .card-success{border-left:3px solid #22c55e;}
 .card-error  {border-left:3px solid #ef4444;}
 .card-info   {border-left:3px solid #3b82f6;}
@@ -149,10 +153,11 @@ section[data-testid="stSidebar"] > div{padding:1rem .75rem!important;}
       font-family:'IBM Plex Mono',monospace;margin-right:.35rem;}
 
 /* ── Export box ───────────────────────────────────────────────────────── */
-.export-box{background:#0f1117;border:1px solid #1e2535;border-radius:8px;
-            padding:.85rem 1rem;margin-top:.65rem;}
-.export-title{color:#94a3b8;font-size:.72rem;font-family:'IBM Plex Mono',monospace;
-              font-weight:600;margin-bottom:.65rem;letter-spacing:.05em;}
+.export-box{background:#0f1117;border:1px solid #1e2535;border-radius:10px;
+            padding:1.2rem 1.5rem;margin-top:1rem;}
+.export-title{color:#94a3b8;font-size:.75rem;font-family:'IBM Plex Mono',monospace;
+              font-weight:600;margin-bottom:.85rem;letter-spacing:.06em;}
+@media (max-width:640px){.export-box{padding:.85rem 1rem;margin-top:.65rem;}}
 
 /* ── History items ────────────────────────────────────────────────────── */
 .hist-item{background:#161b27;border:1px solid #1e2535;border-radius:6px;
@@ -165,9 +170,9 @@ section[data-testid="stSidebar"] > div{padding:1rem .75rem!important;}
 
 /* ── Report container ─────────────────────────────────────────────────── */
 .report-container{
-    background:#161b27;border:1px solid #1e2535;border-radius:8px;
-    padding:clamp(1.2rem,4vw,2.5rem);margin-top:1rem;line-height:1.8;
-    overflow-x:auto;word-break:break-word;
+    background:#161b27;border:1px solid #1e2535;border-radius:10px;
+    padding:clamp(1.2rem,3vw,3rem);margin-top:1rem;line-height:1.8;
+    overflow-x:auto;word-break:break-word;width:100%;
 }
 .report-container h1{color:#e2e8f0;font-size:clamp(1.2rem,3vw,1.6rem);
     border-bottom:2px solid #2563eb;padding-bottom:.5rem;margin-bottom:1.2rem;}
@@ -249,10 +254,22 @@ div[data-testid="stVerticalBlock"] div[data-testid="stButton"] button{
     letter-spacing:0.03em!important;
 }
 
-/* ── Fix centered layout max width ───────────────────────────────────── */
-.block-container{max-width:860px!important;padding-left:1.5rem!important;padding-right:1.5rem!important;}
+/* ── Full-width desktop layout ────────────────────────────────────────── */
+.block-container{
+    max-width:1200px!important;
+    padding-left:3rem!important;
+    padding-right:3rem!important;
+    padding-top:2rem!important;
+    margin:0 auto!important;
+}
+@media (min-width:1400px){
+    .block-container{padding-left:5rem!important;padding-right:5rem!important;}
+}
+@media (max-width:900px){
+    .block-container{padding-left:1.5rem!important;padding-right:1.5rem!important;}
+}
 @media (max-width:640px){
-    .block-container{max-width:100%!important;padding-left:.75rem!important;padding-right:.75rem!important;}
+    .block-container{padding-left:.75rem!important;padding-right:.75rem!important;padding-top:1rem!important;}
 }
 
 
@@ -276,6 +293,19 @@ BASE_DIR     = Path(__file__).parent
 HISTORY_FILE = BASE_DIR / "logs" / "history.json"
 
 def load_history() -> list:
+    """
+    Load run history — prefers Supabase (cloud_storage) so history
+    survives restarts on Streamlit Cloud. Falls back to local history.json.
+    """
+    try:
+        from cloud_storage import get_history, is_cloud_configured
+        if is_cloud_configured():
+            records = get_history(limit=20)
+            if records:
+                return records
+    except Exception:
+        pass
+
     if not HISTORY_FILE.exists():
         return []
     try:
@@ -326,9 +356,13 @@ with st.sidebar:
         st.markdown("<div class='card card-error'><span style='color:#ef4444;font-size:.8rem;'>GROQ_API_KEY not set</span></div>", unsafe_allow_html=True)
 
     try:
-        from memory import Memory
-        mem_obj = Memory(str(HISTORY_FILE))
-        stats   = mem_obj.get_stats()
+        from cloud_storage import get_stats as cloud_get_stats, is_cloud_configured
+        if is_cloud_configured():
+            stats = cloud_get_stats()
+        else:
+            from memory import Memory
+            mem_obj = Memory(str(HISTORY_FILE))
+            stats   = mem_obj.get_stats()
         st.markdown("---")
         st.markdown("<div style='color:#64748b;font-size:.75rem;font-family:IBM Plex Mono,monospace;margin-bottom:.75rem;'>MEMORY STATS</div>", unsafe_allow_html=True)
         c1, c2 = st.columns(2)
@@ -395,8 +429,9 @@ if "selected_persona" not in st.session_state:
 # ── Persona grid — pure HTML so all cards are identical size ─────────────────
 selected_now = st.session_state.selected_persona
 
-# Persona grid — 3 cards per row, select button INSIDE each card
-rows = [all_personas[i:i+3] for i in range(0, len(all_personas), 3)]
+# Persona grid — 6 columns on desktop, 3 on tablet (CSS handles mobile)
+# All 6 in one row on desktop for full-width distribution
+rows = [all_personas]  # all 6 in one row; CSS wraps on small screens
 for row in rows:
     cols = st.columns(len(row))
     for col, p in zip(cols, row):

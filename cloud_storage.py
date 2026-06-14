@@ -250,3 +250,41 @@ def is_cloud_configured() -> bool:
     """Return True if Supabase credentials are available."""
     url, key = _get_supabase_creds()
     return bool(url and key)
+
+
+def debug_status() -> dict:
+    """
+    Returns diagnostic info — call this to debug why Supabase isn't working.
+    Usage:
+        from cloud_storage import debug_status
+        print(debug_status())
+    """
+    url, key = _get_supabase_creds()
+    result = {
+        "url_set":     bool(url),
+        "key_set":     bool(key),
+        "url_preview": (url[:30] + "...") if url else None,
+        "client_created": False,
+        "table_reachable": False,
+        "error": None,
+    }
+    if not url or not key:
+        result["error"] = "SUPABASE_URL or SUPABASE_KEY not set in env/secrets"
+        return result
+
+    try:
+        from supabase import create_client
+        client = create_client(url, key)
+        result["client_created"] = True
+    except Exception as exc:
+        result["error"] = f"create_client failed: {exc}"
+        return result
+
+    try:
+        resp = client.table("research_history").select("id").limit(1).execute()
+        result["table_reachable"] = True
+        result["row_count_sample"] = len(resp.data)
+    except Exception as exc:
+        result["error"] = f"table query failed: {exc}"
+
+    return result
